@@ -1,6 +1,7 @@
 const express = require('express');
 
 const app = express();
+const cors = require('cors')
 const PORT = process.env.PORT || 8080;
 const knex = require('knex')(require('./knexfile.js')[process.env.NODE_ENV||'development']);
 
@@ -9,6 +10,7 @@ const postNewMovie = (movie) => {
   };
 
 app.use(express.json());
+app.use(cors())
 
 app.get('/movies', function(req, res) {
   knex

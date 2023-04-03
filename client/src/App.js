@@ -1,14 +1,21 @@
 import './App.css';
+import { createContext, useEffect, useState } from 'react';
 
 function App() {
+  const [movies, setMovies] = useState([]);
 
-  const movies = [
-    {title: 'Mean Girls'},
-    {title: 'Hackers'},
-    {title: 'The Grey'},
-    {title: 'Sunshine'},
-    {title: 'Ex Machina'},
-  ];
+  useEffect(()=>{
+      fetch('http://localhost:8080/movies/', {
+        method:'GET',
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+          
+        },
+      })
+      .then(res => res.json())
+      .then(data => setMovies(data))
+   
+  }, [])
 
   const movieArray = movies.map((movie)=> <li>{movie.title}</li>)
 
