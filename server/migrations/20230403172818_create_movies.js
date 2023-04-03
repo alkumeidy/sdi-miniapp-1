@@ -1,0 +1,20 @@
+const { HtmlTableImportModule } = require("react-tabulator/lib/types/TabulatorTypes");
+
+/**
+ * @param { import("knex").Knex } knex
+ * @returns { Promise<void> }
+ */
+exports.up = function(knex) {
+    return knex.schema.createTable('movies', table => {
+        table.increments('id');
+        table.string('title');
+    })
+};
+
+/**
+ * @param { import("knex").Knex } knex
+ * @returns { Promise<void> }
+ */
+exports.down = function(knex) {
+    return knex.schema.dropTableIfExists('movies');
+};
