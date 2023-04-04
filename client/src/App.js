@@ -16,16 +16,22 @@ function App() {
       })
       .then(res => res.json())
       .then(data => setMovies(data))
-   
-  }, [])  
 
-  const movieArray = movies.map((movie)=> <li>{movie.title}</li>)
+  }, [addMovie, deleteMovie, setUpdate])
+
+  const movieArray = movies.map((movie)=>
+  <div>
+    <li>
+      {movie.title+" "}<input id={movie.id} onClick={e => deleteMovie(movie.id)} type="button" value="X" />
+      <hr></hr>
+    </li></div>)
 
   function handleSearch(){
     console.log(search)
     let filteredArray = movies.filter(movie => movie.title.includes(search));
     console.log(filteredArray);
     setMovies(filteredArray);
+    //setSearch("");
   }
 
   function addMovie(movie){
@@ -35,13 +41,19 @@ function App() {
         "Content-type": "application/json; charset=UTF-8"
       },
       body: JSON.stringify({title: movie})
-      .then((res) => res.json())
+
+    })
+    //setUpdate("");
+  }
+
+  function deleteMovie(id){
+    console.log(id)
+    fetch(`http://localhost:8080/movies/${id}`, {
+      method:'DELETE',
     })
   }
 
-  function deleteMovie(){
-    let filteredArray = movies.filter(movie => movie.title.includes(search));
-  }
+
 
   return (
     <div className="App">
@@ -59,7 +71,7 @@ function App() {
         <div>
           <h3>Updates Movies</h3>
             <input id="updateMovieInput" value={update} onChange={e => setUpdate(e.target.value)} type="text"/>
-            <input id='addBtn' type="button" onClick={addMovie} value='  Add  '/>
+            <input id='addBtn' type="button" onClick={() => addMovie(update)} value='  Add  '/>
             <input id='removeBarBtn' type="button" onClick={handleSearch} value='Remove'/>
         </div>
 

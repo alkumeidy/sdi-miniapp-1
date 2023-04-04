@@ -36,6 +36,18 @@ app.post("/movies", (req, res) => {
       });
   });
 
+  app.delete('/movies/:id', (req, res) => {
+    //var id = req.params;
+    knex('movies')
+    .where(id=req.params)
+    .del()
+    .catch(err =>
+      console.log(err)
+    );
+
+    res.send("Resource has been deleted.")
+})
+
 app.listen(PORT, () => {
   console.log(`The server is running on ${PORT}`);
 });
